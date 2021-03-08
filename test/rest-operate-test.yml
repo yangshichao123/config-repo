@@ -1,0 +1,97 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/zkcxxn_main?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true&useSSL=false
+    username: dms
+    password: Dms2021!@#
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 6000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+  redis:
+    database: 10
+    password: znx1234
+#    host: 47.93.138.176:26500
+    timeout: 10000
+    pool:
+      max-active: 500
+      max-idle: 500
+      max-wait: 10000
+      min-idle: 0
+    sentinel:
+      master: mymaster
+      nodes: 127.0.0.1:26301,127.0.0.1:26302,127.0.0.1:26303
+
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: 127.0.0.1:9092
+          zkNodes: 127.0.0.1:2181
+    bus:
+      trace:
+        enabled: true
+
+#reasonable：分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0
+# 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。默认false 时，直接根据参数进行查询
+#pagehelper:
+#  reasonable: true
+#  helper-dialect: mysql
+
+
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+
+
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+# 打印sql
+logging:
+  level:
+    com.aifuke.article.web.mapper : info
+
+url:
+  brandInfo: http://127.0.0.1:18080/web-znx-1.0/opr/mall/mdsebrand/queryMdseBrand
+  webAvicareDomainName: http://127.0.0.1:18080/web-znx-1.0
+  web-account: http://127.0.0.1:18080/web-account-1.0
+# 商品位置数量限制
+activity:
+  content:
+    maxQuantity: 120

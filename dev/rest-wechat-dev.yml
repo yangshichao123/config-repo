@@ -1,0 +1,79 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+wechat:
+  signature: avicaretest
+  uniquecode: gh_01eeda3f3d41
+#  resource:
+#    gh_01eeda3f3d41:
+#      appid: wxf20290f567b56089
+#      secret: 34798d63cc30f6bb17d85c5db717b65d
+
+spring:
+  data:
+    mongodb:
+      host: 10.30.137.31
+      port: 27017
+      username: wechat
+      password: wechat
+      database: wechat
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  redis:
+    database: 0
+    password: znx1234
+    sentinel:
+      master: mymaster
+      nodes: 10.30.95.85:26379
+#    database: 0
+#    password: iw29838u23iuaskjdmznmewweo8702
+#    sentinel:
+#      master: mymaster
+#      nodes: 10.81.236.103:26379,10.80.236.217:26379,10.80.236.217:26380
+    pool:
+      max-active: -1
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 10000
+  cloud:
+#    stream:
+#      default-binder: kafka
+#      kafka:
+#        binder:
+##          brokers: 39.106.248.44:9092
+##          zkNodes: 39.106.248.44:2181
+#          brokers: localhost:9092
+#          zkNodes: localhost:2181
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: 10.30.95.85
+    port: 6672
+    username: avicare
+    password: avicare
+    virtual-host: avicarecommon
+    cache:
+      channel:
+        size: 5
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false

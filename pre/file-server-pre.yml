@@ -1,0 +1,42 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+FastDFS:
+  tracker_http_port: 22122
+  anti_steal_token: false
+  secret_key: FastDFS1234567890#!
+  connect_timeout: 4000
+  network_timeout: 10000
+  charset: UTF-8
+  tracker_server[0]: 10.27.219.162:22122
+  agency:
+    url: https://mycdn.avicare.cn
+
+spring:
+#  sleuth:
+#    sampler:
+#      percentage: 0.1
+#  zipkin:
+#    service:
+#      name: zipkin-server
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+##          brokers: 39.106.248.44:9092
+##          zkNodes: 39.106.248.44:2181
+          brokers: 182.92.124.111:9092
+          zkNodes: 10.66.176.48:2181
+    bus:
+      trace:
+        enabled: true
+
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false

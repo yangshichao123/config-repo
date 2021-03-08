@@ -1,0 +1,334 @@
+server:
+  max-http-header-size: 81920
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+    basedir: /mnt/vdb/logs/tomcat
+    accesslog:
+      buffered: true
+      directory: logs
+      file-date-format: '.yyyy-MM-dd'
+      prefix: access_log
+      suffix: '.log'
+      enabled: true
+      pattern: common
+
+zuul:
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+    max-per-route-connections: 1000
+    max-total-connections: 1000
+  add-host-header: true
+  sensitive-headers:
+  #ribbon-isolation-strategy: THREAD
+  ribbon:
+    eager-load:
+      enabled: true
+  ignored-services: '*'
+  routes:
+    rest-card-account:
+      path: /rest-card-account/**
+      serviceId: rest-card-account
+    rest-notify:
+      path: /rest-notify/**
+      serviceId: rest-notify
+    rest-account:
+      path: /rest-account/**
+      serviceId: rest-account
+    rest-wechat:
+      path: /rest-wechat/**
+      serviceId: rest-wechat
+    rest-mall:
+      path: /rest-mall/**
+      serviceId: rest-mall
+    jiafuservice:
+      path: /jiafuservice/**
+      serviceId: jiafuservice
+    rest-guarantee:
+      path: /rest-guarantee/**
+      serviceId: rest-guarantee
+    rest-e-order:
+      path: /rest-eorder/**
+      serviceId: rest-eorder
+    rest-order:
+      path: /rest-order/**
+      serviceId: rest-order
+    rest-scs:
+      path: /rest-scs/**
+      serviceId: rest-scs
+    rest-count:
+      path: /rest-count/**
+      serviceId: rest-count
+    rest-operate:
+      path: /rest-operate/**
+      serviceId: rest-operate
+    rest-scanpay:
+      path: /rest-scanpay/**
+      serviceId: rest-scanpay
+    rest-activity:
+      path: /rest-activity/**
+      serviceId: rest-activity
+    rest-coupon:
+      path: /rest-coupon/**
+      serviceId: rest-coupon
+    rest-step:
+      path: /rest-step/**
+      serviceId: rest-step
+    rest-enterprise-account:
+      path: /rest-enterprise-account/**
+      serviceId: rest-enterprise-account
+    rest-rorder:
+      path: /rest-rorder/**
+      serviceId: rest-rorder
+    rest-statistics:
+      path: /rest-statistics/**
+      serviceId: rest-statistics
+    rest-flow:
+      path: /rest-flow/**
+      serviceId: rest-flow
+    rest-league-statistics:
+      path: /rest-league-statistics/**
+      serviceId: rest-league-statistics
+    rest-netease-merchandise:
+      path: /rest-netease-merchandise/**
+      serviceId: rest-netease-merchandise
+#禁用spring自带filter 提高tps 具体未知，保留
+  FormBodyWrapperFilter:
+    pre:
+      disable: true
+#hystrix
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+  threadpool:
+    default:
+      coreSize: 500 ##并发执行的最大线程数，默认10
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+#ribbon
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+#token加密用的signing-key  url可以直接放到redis中处理
+uri:
+  security:
+    signing-key: avicarerunrun
+    releaseUri[0]: /rest-account/sys/login/passwdlogin
+    releaseUri[1]: /rest-mall/mall/shoppingCart/cleanShoppingcart
+    releaseUri[2]: /rest-eorder/mall/eOrder/completeEOrder
+    releaseUri[3]: /rest-eorder/mall/eOrder/callBackEOrder
+    releaseUri[4]: /rest-eorder/mall/eOrder/checkEOrder
+    releaseUri[5]: /rest-account/thirdParty/updateUserInfo/wrdc20180112
+    releaseUri[6]: /rest-wechat/wechat/receiveMessage
+    releaseUri[7]: /rest-account/webinfo/getVerifyCode
+    releaseUri[8]: /rest-account/webinfo/saveWebInfo
+    releaseUri[9]: /rest-account/unlogin/findEmployeeByID
+    releaseUri[10]: /rest-account/unlogin/syncToSecurityMall
+    releaseUri[11]: /rest-account/sys/main/function/enterprise/201/1001
+    releaseUri[12]: /rest-wechat/wechat/pageAccessToken
+    releaseUri[13]: /rest-wechat/iwechat/loadWxClients
+    releaseUri[14]: /rest-card-account/card/balance/list/export
+    releaseUri[15]: /rest-card-account/card/recharge/audit/list/export
+    releaseUri[16]: /rest-card-account/card/recharge/detail/list/export
+    releaseUri[17]: /rest-card-account/card/transaction/list/export
+    releaseUri[18]: /rest-order/order/log/addLog
+    releaseUri[19]: /rest-card-account/card/account/entmanage/exportrechargestatistics
+    releaseUri[20]: /rest-card-account/card/balance/refund
+    releaseUri[21]: /rest-account/oper/org/employee/exportExcel
+    releaseUri[22]: /rest-account/enter/org/employee/exportExcel
+    releaseUri[23]: /rest-account/channel/org/employee/exportExcel
+    releaseUri[24]: /rest-card-account/card/balance/payment
+    releaseUri[25]: /rest-card-account/card/balance/enabledEmployeeCardBalances
+    releaseUri[26]: /rest-notify/message/saveMessage
+    releaseUri[27]: /rest-scs/scs/wrongorder/getWrongOrder2Save
+    releaseUri[28]: /jiafuservice/**
+    releaseUri[29]: /oauth2-server/**
+    releaseUri[30]: /rest-scs/scs/wrongorder/notifyNomal/*/*
+    releaseUri[31]: /rest-card-account/card/account/mdse/exportcardmdses
+    releaseUri[32]: /rest-card-account/card/account/module/**
+    releaseUri[33]: /rest-notify/message/user/downloadExcel
+    releaseUri[34]: /rest-card-account/card/account/mdse/exportcardmdsestmpl
+    releaseUri[35]: /uaa/wechat/authorize
+    releaseUri[36]: /uaa/wechat/test
+    releaseUri[37]: /uaa/oauth/token
+    releaseUri[38]: /uaa/user
+    releaseUri[39]: /rest-card-account/card/account/mdse/exportskusfailed/*
+    releaseUri[40]: /rest-notify/message/user/sendMsg
+    releaseUri[41]: /rest-notify/message/user/sendVerifyCode
+    releaseUri[42]: /rest-card-account/channel/card/recharge/statistics/export
+    releaseUri[43]: /rest-guarantee/manage/dailybill/exportOrderSplitDetailForPDF
+    releaseUri[44]: /rest-guarantee/manage/dailybill/exportOrderSplitDetailForExcel
+    releaseUri[45]: /rest-guarantee/manage/dailybill/exportDailyBillList
+    releaseUri[46]: /rest-guarantee/manage/settlement/exportExcel
+    releaseUri[47]: /rest-guarantee/manage/settlement/exportPDF
+    releaseUri[48]: /rest-card-account/card/balance/refund/any
+    releaseUri[49]: /rest-account/org/enterprise/register
+    releaseUri[50]: /rest-card-account/card/lovezone/manage/rankings/export/personofent
+    releaseUri[51]: /rest-card-account/card/lovezone/manage/rankings/export/personofbloc
+    releaseUri[52]: /rest-card-account/card/lovezone/manage/rankings/export/entofbloc
+    releaseUri[53]: /rest-card-account/card/lovezone/chlmanage/rankings/export/personofent
+    releaseUri[54]: /rest-card-account/card/lovezone/chlmanage/rankings/export/personofbloc
+    releaseUri[55]: /rest-card-account/card/lovezone/chlmanage/rankings/export/entofbloc
+    releaseUri[56]: /rest-mall/mall/shoppingCart/enterprise/cleanShoppingcart
+    releaseUri[57]: /rest-notify/message/user/massMessageByEnterpriseId
+    releaseUri[58]: /rest-notify/message/user/sendMsgByChannel
+    releaseUri[59]: /rest-order/channel/order/exportExcel
+    releaseUri[60]: /rest-wechat/wechat/sign/**
+    releaseUri[61]: /rest-card-account/card/lovezone/manage/export/partakeofempconsumption
+    releaseUri[62]: /rest-card-account/card/lovezone/chlmanage/export/empconsumptionrecords
+    releaseUri[63]: /rest-card-account/card/lovezone/chlmanage/export/partakeofempconsumption
+    releaseUri[64]: /rest-card-account/card/lovezone/manage/export/empconsumptionrecords
+    releaseUri[65]: /rest-count/web/presalegoods/export/**
+    releaseUri[66]: /rest-guarantee/channel/mall/mdseprice/getPriceBy*
+    releaseUri[67]: /rest-notify/manage/article/list
+    releaseUri[68]: /rest-operate/show/employee/preferential
+    releaseUri[69]: /rest-operate/show/employee/jd
+    releaseUri[70]: /rest-operate/show/employee/love/home
+    releaseUri[71]: /rest-operate/show/enterprise/love/home
+    releaseUri[72]: /rest-account/oper/org/selectEnterpriseIdsByChannelId
+    releaseUri[73]: /rest-account/oper/org/selectCompanyIdsByChannelId
+    releaseUri[74]: /rest-operate/show/employee/index/article
+    releaseUri[75]: /rest-operate/show/employee/load/preferential/category
+    releaseUri[76]: /rest-count/web/statistics/export/*
+    releaseUri[77]: /rest-activity/active/voteacivity/excel/*
+    releaseUri[78]: /rest-coupon/operate/statistical/import/info
+    releaseUri[79]: /rest-coupon/client/emp/get/coupon/detail/*
+    releaseUri[80]: /rest-coupon/client/emp/get/received/coupon/detail/*
+    releaseUri[81]: /rest-coupon/client/emp/submit/coupon/order
+    releaseUri[82]: /rest-coupon/client/emp/reverse/coupon/order
+    releaseUri[83]: /rest-order/intout/merchandise/exportMerchandise
+    releaseUri[84]: /rest-order/intout/order/exportOrders
+    releaseUri[85]: /rest-order/intout/sales/exportOrderRepertory
+    releaseUri[86]: /rest-order/intout/sales/exportOutSalesOrder
+    releaseUri[87]: /rest-order/intout/sales/exportOutSalesOutOrder
+    releaseUri[88]: /rest-order/intout/sales/exportOutSalesOutGoods
+    releaseUri[89]: /rest-order/intout/order/exportOrderRepertoryInList
+    releaseUri[90]: /rest-order/intout/order/exportGoodsRepertoryInList
+    releaseUri[91]: /rest-order/supplier/bill/export/*
+    releaseUri[92]: /rest-activity/active/emp/questions/export/*
+    releaseUri[93]: /rest-order/intout/merchandise/exportSellNumInfo
+    releaseUri[94]: /rest-operate/appver/get/*
+    releaseUri[95]: /rest-operate/sb/ct/se/sr
+    releaseUri[96]: /rest-operate/sb/ct/ld/sr/dt
+    releaseUri[97]: /rest-operate/sb/ct/ssl/bw
+    releaseUri[98]: /rest-operate/sb/ct/ssl/pt
+    releaseUri[99]: /rest-operate/app/un/ld/article/type
+    releaseUri[100]: /rest-enterprise-account/rest/enterprise/account/addAccountRecordConsumption
+    releaseUri[101]: /rest-enterprise-account/rest/enterprise/account/addAccountRecordRefund
+    releaseUri[102]: /rest-enterprise-account/rest/enterprise/account/usableEnterpriseAccount
+    releaseUri[103]: /rest-enterprise-account/rest/enterprise/account/getEnterpriseAccountBalanceMoney
+    releaseUri[104]: /rest-enterprise-account/share/**
+    releaseUri[105]: /rest-wechat/wechat/sessionKey
+    releaseUri[106]: /rest-account/enter/org/export/employee
+    releaseUri[107]: /rest-account/client/get/supplierLabel/merchandiseScope/id
+    releaseUri[108]: /rest-account/oper/org/page/platform
+    releaseUri[109]: /rest-notify/manage/suggestion/export
+    releaseUri[110]: /rest-notify/manage/suggestion/ent/export
+    releaseUri[111]: /rest-card-account/card/recharge/exportrechargedetail
+    releaseUri[112]: /rest-card-account/oper/update/all/leagueMember/task
+    releaseUri[113]: /rest-activity/active/emp/photo/empFPDetailShare
+    releaseUri[114]: /rest-activity/active/emp/photo/empPhotoVoteShare
+    releaseUri[115]: /rest-activity/active/emp/offLine/empOffLineDetailShare
+    releaseUri[116]: /rest-activity/active/emp/sport/detailsShare
+    releaseUri[117]: /rest-activity/active/emp/sport/rankingListShare
+    releaseUri[118]: /rest-activity/active/emp/voteacivity/empFindVoteDetailShare
+    releaseUri[119]: /rest-activity/active/emp/questions/getQuestionsTopicsListShare
+    releaseUri[120]: /rest-activity/active/emp/questions/getQuestionReplayAnswerShare
+    releaseUri[121]: /rest-activity/active/emp/offLineWonderful/getWonderfulListShare
+    releaseUri[122]: /rest-activity/active/emp/offLineWonderful/getWonderDetailShare
+    releaseUri[123]: /rest-activity/active/mobile/wechat/*
+    releaseUri[124]: /rest-activity/active/voteComment/deleteShare
+    releaseUri[125]: /rest-activity/active/voteComment/addCommentShare
+    releaseUri[126]: /rest-activity/active/emp/photo/getVoteDetailShare
+    releaseUri[127]: /rest-activity/active/emp/voteacivity/empClickVotesShare
+    releaseUri[128]: /rest-account/org/enterprise/register/v3
+    releaseUri[129]: /rest-operate/show/employee/load/preferential/category/v4
+    releaseUri[130]: /rest-netease-merchandise/remote/findYxSkuToOrderList
+    releaseUri[131]: /rest-netease-merchandise/remote/findSkuInfor4List
+    releaseUri[132]: /rest-netease-merchandise/remote/findYxMdseSkuDtoBySkuId
+    releaseUri[133]: /rest-netease-merchandise/remote/select4Guarantee
+    releaseUri[134]: /rest-netease-merchandise/remote/getMdseStockMap
+    releaseUri[135]: /rest-account/oper/org/employee/yx/*
+    releaseUri[136]: /rest-netease-merchandise/remote/getMdseStockMap
+    releaseUri[137]: /rest-card-account/card/account/manage/getCardAccountNameById/*
+    releaseUri[138]: /rest-card-account/card/account/manage/getWalletNameById/*
+    releaseUri[139]: /rest-operate/show/employee/load/union
+    releaseUri[140]: /rest-card-account/card/account/emp/getsecondplatformaccount/*
+    releaseUri[141]: /rest-card-account/card/account/emp/selectAllLeagueList/*
+    releaseUri[142]: /rest-card-account/oper/league/supplierId
+    releaseUri[143]: /rest-operate/operate/category/group/listGroupByleaueId
+    releaseUri[144]: /rest-card-account/card/account/manage/getGoodsType
+    releaseUri[145]: /rest-account/org/enterprise/register/v2
+    releaseUri[146]: /rest-activity/bookReview/emp/deleteCommentsShare
+    releaseUri[147]: /rest-activity/bookReview/emp/addCommentsShare
+    releaseUri[148]: /rest-activity/bookReview/emp/giveThumbsShare
+    releaseUri[149]: /rest-activity/bookReview/emp/selectDetailByWordsIdShare
+    releaseUri[150]: /rest-activity/active/emp/photo/getCommentListShare
+    releaseUri[151]: /rest-activity/opr/quiz/analysis/excel/manageRankList
+    releaseUri[152]: /rest-activity/opr/quiz/analysis/excel/getAnalysisList
+    releaseUri[153]: /rest-operate/operate/emp/extension/findMemberIndex
+    releaseUri[154]: /rest-operate/operate/emp/extension/load/contentsH5ByIndex
+    releaseUri[155]: /rest-operate/operate/emp/article/load/articleInfo
+    releaseUri[156]: /rest-operate/operate/emp/extension/load/detailById
+    releaseUri[157]: /rest-operate/operate/emp/extension/findMemberSubtitle
+    releaseUri[158]: /rest-operate/operate/content/article/get/category/byTypeByGBK/page
+    releaseUri[159]: /rest-card-account/card/balance/fileTakeBack
+    releaseUri[160]: /rest-card-account/card/account/mdse/updateCardAccountMdseStatus
+    releaseUri[161]: /rest-notify/message/user/massMessageToUsers
+    releaseUri[162]: /rest-account/org/platform/excel/platform
+    releaseUri[163]: /rest-account/oper/org/enterprise/channel/exportExcel
+    releaseUri[164]: /rest-wechat/iwechat/findAllWxClientMaps
+    releaseUri[165]: /rest-activity/active/record/excel/daily
+    releaseUri[166]: /rest-wechat/iwechat/findWxPictureByPlatformId
+    releaseUri[167]: /rest-wechat/iwechat/findWxPictureByOuterChannelID
+    releaseUri[168]: /rest-card-account/card/enterprise/get/library/type
+    releaseUri[169]: /rest-operate/operate/messageArticle/exportMessageArticleList
+    releaseUri[170]: /rest-account/org/enterprise/excelErrorEnterpriseBean
+
+    # 允许后登录的uri
+    loginLaterUri[0]: /rest-card-account/card/account/emp/cardinfowallet
+    loginLaterUri[1]: /rest-account/sys/func/enter/ld/auth/tree/*
+    loginLaterUri[2]: /rest-operate/show/enterprise/welfare/home
+    loginLaterUri[3]: /rest-operate/show/enterprise/load/bulkPurchase
+    loginLaterUri[4]: /rest-operate/show/enterprise/indexcontent
+    loginLaterUri[5]: /rest-card-account/card/account/emp/suportedcards
+    loginLaterUri[6]: /rest-account/sys/func/enter/tree/H5/*
+    loginLaterUri[7]: /rest-operate/show/employee/load/homeArticle
+    loginLaterUri[8]: /rest-mall/mall/shoppingCart/enterprise/findSumAmount
+    loginLaterUri[9]: /rest-operate/operate/activities/selectH5OperateActivitiesById
+    loginLaterUri[10]: /rest-mall/mall/shoppingCart/findSumAmount
+spring:
+#  sleuth:
+#    sampler:
+#      percentage: 1.0
+#  zipkin:
+#    service:
+#      name: zipkin-server
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: 10.81.10.1:9092
+          zkNodes: 10.81.10.1:2181
+    bus:
+      trace:
+        enabled: true
+
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+
+

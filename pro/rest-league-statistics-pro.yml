@@ -1,0 +1,65 @@
+server:
+  tomcat:
+    accept-count: 2000
+    max-threads: 2000
+    max-connections: 2000
+  max-http-header-size: 81920
+
+spring:
+  rabbitmq:
+    host: 10.81.236.103
+    port: 6672
+    username: avicaremq
+    password: iqwueoiruq487509823749827assadf
+    virtual-host: avicarecommon
+    cache:
+      channel:
+        size: 5
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  aop:
+    auto: true
+    proxy-target-class: false
+  cloud:
+    bus:
+      trace:
+        enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+#饥饿加载
+ribbon:
+  eager-load:
+    enabled: true
+    clients: file-server
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+url:
+  request-skuId: http://10.50.243.212/web-avicare-1.0
+hbase:
+  config:
+    hbase.zookeeper.quorum: 192.168.192.243
+    hbase.zookeeper.property.clientPort: 2181
+ES:
+  cluster:
+    name: avicare
+  ip: 192.168.192.243

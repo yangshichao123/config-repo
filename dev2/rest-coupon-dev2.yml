@@ -1,0 +1,119 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  #  实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.aifuke.core.repository.model*
+  check-config-location: true
+  executor-type: REUSE
+  configuration:
+    mapUnderscoreToCamelCase: true
+    aggressive-lazy-loading: false
+    auto-mapping-behavior: partial
+    auto-mapping-unknown-column-behavior: FAILING
+    cache-enabled: true
+    call-setters-on-nulls: false
+  global-config:
+    refresh: true
+    sql-parser-cache: true
+    sql-session: com.baomidou.mybatisplus.extension.MybatisSqlSessionTemplate
+    sql-session-factory: com.baomidou.mybatisplus.autoconfigure
+    db-config:
+      capital-mode: false
+      column-like: false
+      db-type: mysql
+      id-type: none
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      table-underline: true
+
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+ribbon:
+  eager-load:
+    enabled: true
+
+thread:
+  pool:
+    config:
+      corePoolSize: 80
+      maximumPoolSize: 100
+      keepAliveTime: 0
+      size: 30
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.66.88.69:3306/zkcxxn_main?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true&useSSL=false
+    username: avicare
+    password: avicare201802
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 6000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 900000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      validation-query-timeout: 30000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall,log4j
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;druid.stat.logSlowSql=true;
+
+  redis:
+    database: 11
+    password: znx1234
+    sentinel:
+      master: mymaster
+      nodes: 10.30.95.85:26379
+    pool:
+      max-active: -1
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 10000
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: 123.56.4.251:9092
+          zkNodes: 10.66.176.209:2181
+    bus:
+      trace:
+        enabled: true
+url:
+  domain:
+    web:
+      avicare: http://10.66.176.209:8080/web-avicare-1.0
+
+

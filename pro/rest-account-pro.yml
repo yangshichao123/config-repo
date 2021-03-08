@@ -1,0 +1,194 @@
+server:
+  tomcat:
+    accept-count: 2000
+    max-threads: 2000
+    max-connections: 2000
+  max-http-header-size: 81920
+
+#token配置
+account:
+  uri:
+#    wxUrl: https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5593d70b7945662b&redirect_uri=replace&response_type=code&scope=snsapi_base&state=h5mall#wechat_redirect
+#    qrcodeUrl: https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=
+    remoteNoticeUrl: http://10.50.243.212/web-coin-1.0/v1/tember/updatetembernotice.share
+    fileUploadUrl: http://127.0.0.1:10080
+    syncSupplierUrl: http://10.50.243.212/web-avicare-1.0/opr/mall/mdsesupplier/addsupplier/
+    employeeTemplateUrl: https://mycdn.avicare.cn/group1/M00/06/38/Chvbolriu5uAVz2fAAAmoRz7vSs35.xlsx
+    #employeeTemplateUrlV2: https://alicdn.avicare.cn/group1/M01/0A/35/Chvbol1CwYWAP1phAAAm0ORTq_k22.xlsx
+    #employeeTemplateUrlV2: https://alicdn.avicare.cn/group1/M01/0B/75/Chvbol4NmaKAGsdYAAAqnh1R89s15.xlsx
+    employeeTemplateUrlV2: https://alicdn.avicare.cn/group1/M01/0C/0B/Chvbol4cEi2AEx2jAAArEnw0Fgk32.xlsx
+    employeeTemplateUrlSimple: https://alicdn.avicare.cn/group1/M01/03/7F/ChpU111CyfiAYO9gAAAmtzgbZO872.xlsx
+    remoteUpdateMerchandiseStatusUrl: http://10.50.243.212/web-avicare-1.0/opr/mall/mdse/remoteUpdateMdseStatus
+    remoteUpdateCardAccountMdseStatus: https://app.avicare.cn/apirest/rest-card-account/card/account/mdse/updateCardAccountMdseStatus
+  security:
+    token:
+      expiration-time:  1500
+      refresh-exp-time: 30000
+      issuer: http://www.avicare.cn/
+      signing-key: avicarerunrun
+  excel:
+    benefit:
+      普通: B1
+      中级: B2
+      高级: B3
+    payGrade:
+      2500以下: P1
+      2500-4999: P2
+      5000-7499: P3
+      7500-9999: P4
+      10000-14999: P5
+      15000-19999: P6
+      20000-24999: P7
+      25000-29999: P8
+      30000以上: P9
+    bankDeposit:
+      工商银行: 100000001804
+      招商银行: 100000001805
+      中国银行: 100000001806
+      建设银行: 100000001807
+      交通银行: 100000001808
+      农业银行: 100000001809
+      广东发展银行: 100000001810
+      深圳发展银行: 100000001811
+      浦发银行: 100000001812
+      泰隆商业银行: 100000001813
+      中信银行: 100000001814
+      华夏银行: 100000001815
+      光大银行: 100000001816
+      北京银行: 100000001817
+      民生银行: 100000001834
+      邮政储蓄银行: 100000001829
+
+spring:
+  rabbitmq:
+      host: 10.81.236.103
+      port: 6672
+      username: avicaremq
+      password: iqwueoiruq487509823749827assadf
+      virtual-host: avicarecommon
+      cache:
+        channel:
+          size: 5
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  aop:
+    auto: true
+    proxy-target-class: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-2zeo43d5733668w2k.mysql.rds.aliyuncs.com/zkcxxn_main?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: zkcxxn_main
+    password: 'MsDMqr#0*AHeVbT7'
+    initialSize: 5
+    minIdle: 1
+    maxActive: 20
+    maxWait: 6000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    second:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://rm-2zeo43d5733668w2k.mysql.rds.aliyuncs.com/avicare_market?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+      username: zkcxxn_main
+      password: 'MsDMqr#0*AHeVbT7'
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 6000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+#    host: 10.29.130.90
+#    port: 6379
+#    database: 9
+#    password: iw29838u23iuaskjdmznmewweo8702
+    database: 9
+    password: iw29838u23iuaskjdmznmewweo8702
+    sentinel:
+      master: mymaster
+      nodes: 10.29.130.90:26379,10.81.236.103:26379,10.81.11.29:26379
+    pool:
+      max-active: 500
+      max-wait: -1
+      max-idle: 20
+    timeout: 10000
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: 10.81.10.1:9092
+          zkNodes: 10.81.10.1:2181
+    bus:
+      trace:
+        enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+third:
+  party:
+    huaShengMall: 010
+    huaShengMallCallBackUri: www
+  platform:
+    resource:
+      wrdc20180112:
+        innerEnterpriseID: b8bd4c05a28d422eba4beda7673d9df7
+        secretKey: Yunjia2018_Shop!
+
+avicare:
+  password:
+    rules: TG1NR1N0R3RPcEY0eE55dll0NTRFUT09
+
+#饥饿加载
+ribbon:
+  eager-load:
+    enabled: true
+    clients: file-server
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+enterprise:
+  constant:
+    yt: b4600024630d44969980717e6d9ceea5
+#  正式
+#  b4600024630d44969980717e6d9ceea5
+
+initEnterAndLogin:
+  platformId:
+    role: 58ac35a9754011e982da00163e0c5f40
+    function: 7f2ce200661a4b48a0ab4f211854f13b

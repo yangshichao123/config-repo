@@ -1,0 +1,31 @@
+spring:
+  sleuth:
+    enabled: false
+    sampler:
+      percentage: 1.0
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 182.92.124.111:9092
+          zkNodes: 10.66.176.48:2181
+#          brokers: 127.0.0.1:9092
+#          zkNodes: 127.0.0.1:2181
+zipkin:
+  storage:
+    type: elasticsearch
+    StorageComponent: elasticsearch
+    elasticsearch:
+      cluster: elasticsearch
+      max-requests: 30
+      index: zipkin
+      index-shards: 3
+      index-replicas: 1
+      hosts: 39.106.248.44:9200
+#      hosts: 127.0.0.1:9200
+
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false

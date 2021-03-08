@@ -1,0 +1,48 @@
+config-server 分布式配置中心 10010
+
+rest-account  账户服务 10020
+
+rest-mall 购物车服务 10030
+
+rest-guarantee 线下收银服务 10040
+
+rest-eorder  电子商城服务 10060
+
+rest-notify  通知服务 10070
+
+file-server 文件服务 10080
+
+rest-wechat 微信服务 10090
+
+eureka-server 注册中心 10001 10002
+
+api-gateway 网关 8000
+
+rest-scs  10050
+
+rest-card-account 卡账户服务 10100
+
+rest-order  订单服务 10110
+
+
+rest-operate 运营管理服务 20010
+
+rest-count 统计服务 20020
+
+rest-scanpay 扫码支付  20030
+
+rest-coupon 优惠卷服务  20040
+
+rest-activity 活动服务  20050
+
+rest-step 部署采集  20060
+
+rest-enterprise-account 企业账户  20070
+
+
+rest-netease-merchandise 网易商品 30060
+
+rest-league-statistics 联盟账户统计  20080
+
+rest-flow  审批流 劳模 困难帮扶  30050
+

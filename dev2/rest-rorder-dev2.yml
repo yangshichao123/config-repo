@@ -1,0 +1,161 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  #  实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.avicare.rorder.core.repository.model*
+  check-config-location: true
+  executor-type: REUSE
+  configuration:
+    mapUnderscoreToCamelCase: true
+    aggressive-lazy-loading: false
+    auto-mapping-behavior: partial
+    auto-mapping-unknown-column-behavior: FAILING
+    cache-enabled: true
+    call-setters-on-nulls: false
+  global-config:
+    refresh: true
+    sql-parser-cache: true
+    sql-session: com.baomidou.mybatisplus.extension.MybatisSqlSessionTemplate
+    sql-session-factory: com.baomidou.mybatisplus.autoconfigure
+    db-config:
+      capital-mode: false
+      column-like: false
+      db-type: mysql
+      id-type: none
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      table-underline: true
+
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+ribbon:
+  eager-load:
+    enabled: true
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.66.88.69:3306/avicare_order?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true&useSSL=false
+    username: avicare
+    password: avicare201802
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 6000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 900000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      validation-query-timeout: 30000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall,log4j
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;druid.stat.logSlowSql=true;
+
+  redis:
+    database: 11
+    password: znx1234
+    sentinel:
+      master: mymaster
+      nodes: 10.30.95.85:26379
+    pool:
+      max-active: -1
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 10000
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: 123.56.4.251:9092
+          zkNodes: 10.66.176.209:2181
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: 10.30.95.85
+    port: 6672
+    username: avicare
+    password: avicare
+    virtual-host: avicarecommon
+
+
+constant:
+  jd:
+    domain: https://bizapi.jd.com
+    grant_type: access_token
+    client_id: Gu9PFqZI4eZFI4ofDZBe
+    client_secret: qzQfGs5LYJWy40EnZYU4
+    username: 中航亿通
+    password: jdavicare2017test
+    address_email: jingdongxinxi@avicyt.com
+  domain:
+    avicare: https://dev.avicare.cn
+  project:
+    avicare: web-avicare-1.0
+    coin: web-coin-1.0
+
+avicareCoin:
+    avi_project_url: https://dev.avicare.cn/web-coin-1.0
+    avi_project_key: qiban@*avi^&smarttrust
+
+remote:
+  url: http://10.66.176.209:8080/web-avicare-1.0
+
+nowapi:
+  url: http://api.k780.com/
+  sign: 003f8b4bfeb4d5745dc759c6b36d261e
+  appkey: 33860
+
+sms:
+  templateCode : 313220
+
+wechat:
+  account:
+    appId[0]: wxf20290f567b56089
+    secret[0]: 34798d63cc30f6bb17d85c5db717b65d
+    signKey[0]: 7755b9255e6c230586c62cfd21d2b895
+    mchId[0]: 1429990202
+    clientId[0]: gh_01eeda3f3d41
+    appId[1]: wx1eebf32da11ecf60
+    secret[1]: 34798d63cc30f6bb17d85c5db717b65d
+    signKey[1]: 7755b9255e6c230586c62cfd21d2b895
+    mchId[1]: 1429990202
+    clientId[1]: gh_e4e1e7d8d227
+    appId[2]: wx1fa1078c71fe8411
+    secret[2]: 1
+    signKey[2]: IrDEf8DZZIc0JtkJBQGg8p1UceIh6F5a
+    mchId[2]: 1524052261
+    clientId[2]: HKZJ
+

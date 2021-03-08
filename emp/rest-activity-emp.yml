@@ -1,0 +1,88 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+spring:
+  redisson:
+    config:
+      codec:
+        className: org.redisson.codec.KryoCodec
+      sentinelServersConfig:
+        masterName: master
+        sentinelAddresses: redis://192.168.0.102:26379
+        password: 123456
+        clientName: activityRedission
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  aop:
+    auto: true
+    proxy-target-class: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/avicare_union?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: avicare
+    password: avicare201802
+#     url: jdbc:mysql://47.95.33.180/zkcxxn_main?characterEncoding=UTF-8&autoReconnect=true&useSSL=true
+#     username: zkcxxn_main
+#     password: zkcxxn_main#
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 6000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+    database: 3
+    password: 123456
+    sentinel:
+      master: master
+      nodes: 192.168.0.102:26379
+    pool:
+      max-active: -1
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 10000
+
+  cloud:
+      stream:
+        default-binder: kafka
+        kafka:
+          binder:
+#            brokers: 39.106.248.44:9092
+#            zkNodes: 39.106.248.44:2181
+            brokers: 192.168.0.102:9092
+            zkNodes: 192.168.0.102:2181
+      bus:
+        trace:
+          enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false

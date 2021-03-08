@@ -1,0 +1,105 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  aop:
+    auto: true
+    proxy-target-class: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.66.88.69:3306/zkcxxn_main?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: avicare
+    password: avicare201802
+#     url: jdbc:mysql://47.95.33.180/zkcxxn_main?characterEncoding=UTF-8&autoReconnect=true&useSSL=true
+#     username: zkcxxn_main
+#     password: zkcxxn_main#
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 6000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+    database: 10
+    password: znx1234
+    sentinel:
+      master: mymaster
+      nodes: 10.30.95.85:26379
+    pool:
+      max-active: -1
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 10000
+
+  redis11:
+#      host: 127.0.0.1
+#      port: 6379
+#      database: 11
+#      password: znx1234
+    database: 11
+
+#  sleuth:
+#    sampler:
+#      percentage: 1.0
+#  zipkin:
+#    service:
+#      name: zipkin-server
+
+  cloud:
+      stream:
+        default-binder: kafka
+        kafka:
+          binder:
+#            brokers: 39.106.248.44:9092
+#            zkNodes: 39.106.248.44:2181
+            brokers: 123.56.4.251:9092
+            zkNodes: 10.66.176.209:2181
+      bus:
+        trace:
+          enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+
+#获取商品详情服务地址
+mallclient:
+  url: http://10.66.176.209:8080/web-avicare-1.0
+
+mdse:
+  search:
+    url: http://10.66.176.209:8080/web-avicare-1.0/weixin/mall/search/searchmdsesku?params=
+
+#获取web_coin服务地址
+guaranteemallclient:
+  url: http://10.66.176.209:38080/web-coin-1.0

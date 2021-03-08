@@ -1,0 +1,110 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+spring:
+  rabbitmq:
+      host: 127.0.0.1
+      port: 5672
+      username: avicare
+      password: avicare
+      virtual-host: avicarecommon
+      cache:
+        channel:
+          size: 5
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  aop:
+    auto: true
+    proxy-target-class: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/avicare_order?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: avicare
+    password: avicare201802
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 6000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+#    second:
+#      type: com.alibaba.druid.pool.DruidDataSource
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://39.106.255.29:3306/zkcxxn_main?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+#      username: avicare
+#      password: avicare201802
+#      initialSize: 5
+#      minIdle: 5
+#      maxActive: 20
+#      maxWait: 6000
+#      timeBetweenEvictionRunsMillis: 60000
+#      minEvictableIdleTimeMillis: 300000
+#      validationQuery: SELECT 1 FROM DUAL
+#      testWhileIdle: true
+#      testOnBorrow: false
+#      testOnReturn: false
+#      poolPreparedStatements: true
+#      maxPoolPreparedStatementPerConnectionSize: 20
+#      filters: stat,wall
+#      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: 192.168.0.102:9092
+          zkNodes: 192.168.0.102:2181
+    bus:
+      trace:
+        enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+#饥饿加载
+ribbon:
+  eager-load:
+    enabled: true
+    clients: file-server
+
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+
+remote:
+  url: http://127.0.0.1:8080/web-avicare-1.0
+
+hbase:
+  config:
+    hbase.zookeeper.quorum: 192.168.0.102
+    hbase.zookeeper.property.clientPort: 2181

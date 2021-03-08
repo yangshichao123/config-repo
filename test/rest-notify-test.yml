@@ -1,0 +1,76 @@
+server:
+  tomcat:
+    accept-count: 500
+    max-threads: 500
+    max-connections: 1000
+
+spring:
+   data:
+      mongodb:
+        host: 127.0.0.1
+        port: 27017
+        username: notify
+        password: notify
+        database: notify
+   rabbitmq:
+     host: 127.0.0.1
+     port: 5680
+     username: admin
+     password: admin2019
+     virtual-host: avicare_test_integration_common
+     cache:
+       channel:
+         size: 5
+   redis:
+    database: 0
+    password: znx1234
+    sentinel:
+      master: mymaster
+      nodes: 127.0.0.1:26301,127.0.0.1:26302,127.0.0.1:26303
+    pool:
+      max-active: -1
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 10000
+ccp:
+  url: app.cloopen.com
+  accountsid: 111
+  accounttoken: 111
+  appid: 111
+  port: 8883
+tencent:
+  singleurl: https://yun.tim.qq.com/v5/tlssmssvr/sendsms
+  massurl: https://yun.tim.qq.com/v5/tlssmssvr/sendmultisms2
+  appkey: 0b9a61716798261f93aed46f1f9c7a2e
+  sdkappid: 1400488620
+  addurl: https://yun.tim.qq.com/v5/tlssmssvr/add_template
+  updateurl: https://yun.tim.qq.com/v5/tlssmssvr/mod_template
+  getstatusurl: https://yun.tim.qq.com/v5/tlssmssvr/get_template
+
+#启用shutdown #禁用密码验证
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+#导出短信相关信息的接口路径
+import:
+  message:
+    url: https://test.avicare.cn/web-znx-1.0/message/manage
+
+#爱福客(亿通)企业id
+common:
+  enterpriseId: 45
+
+#容联短信渠道id
+avicare:
+  ccp:
+   channelId: 5b70ef1614e12f54a4e792f0
+  tencent:
+   channelId: 603c5cea84c85d20339384d3
+
+#集团工会总部渠道id
+loveAviation:
+  login:
+    channelId: 603c5cea84c85d20339384d3
+

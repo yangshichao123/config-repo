@@ -1,0 +1,139 @@
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  #  实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.sc.core.repository.model*
+  #  启动时是否检查 MyBatis XML 文件的存在，默认不检查。
+  check-config-location: true
+  executor-type: REUSE
+  configuration:
+    mapUnderscoreToCamelCase: true
+    aggressive-lazy-loading: false
+    auto-mapping-behavior: partial
+    auto-mapping-unknown-column-behavior: FAILING
+    cache-enabled: true
+    call-setters-on-nulls: false
+  global-config:
+    refresh: true
+    sql-parser-cache: true
+    sql-session: com.baomidou.mybatisplus.extension.MybatisSqlSessionTemplate
+    sql-session-factory: com.baomidou.mybatisplus.autoconfigure
+    db-config:
+      capital-mode: false
+      column-like: false
+      db-type: mysql
+      id-type: none
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      table-underline: true
+
+spring:
+  data:
+    solr:
+      host: http://10.66.176.48:8983/solr
+      cuscore:
+        yxmdse: yxmdse
+        mdse: mdse
+        allmdse: allmdse
+      zk-host:
+      import-host: http://10.66.176.48:8983/solr
+  rabbitmq:
+     host: 127.0.0.1
+     port: 6672
+     username: avicare_pre
+     password: avicarepre
+     virtual-host: avicarecommon
+     cache:
+       channel:
+         size: 5
+  redis:
+      database: 0
+      password: znx1234
+      sentinel:
+        master: mymaster
+        nodes: 10.30.95.85:27500
+      pool:
+        max-active: -1
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+      timeout: 10000
+  datasource:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3307/zkcxxn_main?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true&autoReconnect=true&useSSL=false
+      username: avicare_pre
+      password: avicarepre
+      druid:
+        initial-size: 5
+        min-idle: 5
+        max-active: 20
+        max-wait: 6000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        max-evictable-idle-time-millis: 900000
+        validation-query: SELECT 1 FROM DUAL
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        validation-query-timeout: 30000
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        filters: stat,wall,log4j
+        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;druid.stat.logSlowSql=true;
+
+# channel configuration
+channel:
+  appKey: fbcc3b8033c7478480c386f7c49eb3be
+  appSecret: 5f536c8b427947dab73d773b7c69d445
+
+yx:
+  openApi:
+    host: http://openapi-test.you.163.com
+    path: /channel/api.json
+    getIds.method: yanxuan.item.id.batch.get
+    getItems.method: yanxuan.item.batch.get
+    getCategorys.method: yanxuan.item.category.get
+    getSkuIdsByCategoryId.method: yanxuan.item.category.skuId.batch.get
+    getInventory.method: yanxuan.inventory.count.get
+    registerItemFields.method: yanxuan.callback.itemChange.register
+    register.method: yanxuan.callback.method.register
+    underCarriageSku.method: yanxuan.notification.sku.alarm.close
+    groundingSku.method: yanxuan.notification.sku.reopen
+    callbackItemFields.method: yanxuan.callback.item.change
+    checkSkuInventoryCount.method: yanxuan.notification.inventory.count.check
+    getItemSize.method: yanxuan.item.size.table.batch.get
+    callbackRefundAddress.method: yanxuan.notification.order.refund.address
+    callbackOrderRefundReject.method: yanxuan.notification.order.refund.reject
+    callbackOrderRefundExpressConfirm.method: yanxuan.notification.order.refund.express.confirm
+    callbackOrderRefundSystemCancel.method : yanxuan.notification.order.refund.system.cancel
+    callbackOrderRefundResult.method: yanxuan.notification.order.refund.result
+    callbackOrderCancelResult.method: yanxuan.callback.order.cancel
+    callbackOrderDelivered.method: yanxuan.notification.order.delivered
+    callbackOrderExceptional.method: yanxuan.notification.order.exceptional
+    getSkuDetail.method: yanxuan.item.sku.get
+    getAddress.province.get: yanxuan.address.province.get
+    getAddress.city.get: yanxuan.address.city.get
+    getAddress.district.get: yanxuan.address.district.get
+    getAddress.town.get: yanxuan.address.town.get
+
+remote:
+  web_avicare_url: http://127.0.0.1:8080/web-avicare-1.0
+  web_coin_url: http://127.0.0.1:18080/web-coin-1.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
